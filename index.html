@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Lily & Shiu Yuan Wedding</title>
+  <style>
+    :root{
+      --pink:#ff3f9f;
+      --pink2:#ff77bd;
+      --green:#62d65f;
+      --green2:#a7f36f;
+      --white:#ffffff;
+      --soft:rgba(255,255,255,.86);
+      --line:rgba(255,63,159,.36);
+      --shadow:0 18px 44px rgba(255,63,159,.22);
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:"Arial Rounded MT Bold","Hiragino Maru Gothic ProN","Microsoft JhengHei",system-ui,sans-serif;color:var(--green);background:var(--white);overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 14% 8%,rgba(255,63,159,.24) 0 10%,transparent 11%),radial-gradient(circle at 84% 18%,rgba(98,214,95,.30) 0 12%,transparent 13%),radial-gradient(circle at 28% 82%,rgba(255,63,159,.18) 0 11%,transparent 12%),linear-gradient(135deg,var(--white),rgba(167,243,111,.18),rgba(255,119,189,.16),var(--white))}
+    a{color:inherit;text-decoration:none} button,input,textarea{font:inherit}
+    .topbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:20;width:min(94vw,520px);display:flex;gap:7px;justify-content:center;background:rgba(255,255,255,.82);border:2px solid var(--pink);border-radius:999px;box-shadow:var(--shadow);padding:7px;backdrop-filter:blur(12px)}
+    .topbar a,.topbar button{border:0;background:var(--green);color:var(--white);border-radius:999px;padding:8px 10px;font-size:12px;font-weight:900;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease,box-shadow .18s ease}.topbar a.active{background:var(--white);color:var(--pink);box-shadow:0 0 0 3px rgba(255,63,159,.12),0 6px 0 rgba(98,214,95,.35);transform:translateY(-1px) scale(1.04)}.topbar a:hover,.topbar button:hover{transform:translateY(-1px) scale(1.03)}.topbar button{background:var(--green);color:var(--white)}
+    .hero{min-height:100svh;padding:88px 18px 34px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}.hero-card{width:min(92vw,430px);background:var(--soft);border:4px solid var(--pink);border-radius:36px;padding:18px;box-shadow:var(--shadow);position:relative}.hero-card:before{content:"しあわせ";position:absolute;top:-18px;right:20px;background:var(--green);color:var(--white);border:3px solid var(--white);border-radius:999px;padding:8px 14px;font-weight:1000;letter-spacing:.08em;transform:rotate(8deg)}
+    .hero-img{width:100%;height:56svh;max-height:560px;min-height:420px;object-fit:cover;border-radius:28px;border:4px solid var(--green);display:block}.title{position:absolute;left:28px;right:28px;bottom:335px;text-align:center;color:var(--white);text-shadow:0 4px 0 var(--pink),0 0 18px var(--pink)}.title h1{font-size:clamp(48px,17vw,48px);line-height:.82;margin:0;font-weight:1000;letter-spacing:-.08em}.title p{margin:18px auto 0;background:var(--pink);border:3px solid var(--white);border-radius:999px;padding:8px 16px;display:inline-block;font-weight:1000;letter-spacing:.08em}.sticker{position:absolute;background:var(--white);border:3px solid var(--pink);color:var(--pink);border-radius:18px;padding:8px 10px;font-weight:1000;box-shadow:0 8px 0 rgba(98,214,95,.38)}.s1{left:10px;top:24%}.s2{right:4px;top:44%;border-color:var(--green);color:var(--green);transform:rotate(12deg)}.s3{left:20px;bottom:20%;transform:rotate(-9deg)}
+    section{padding:54px 16px}.section-title{text-align:center;margin:0 auto 22px;width:min(92vw,520px)}.section-title b{display:inline-block;background:var(--pink);color:var(--white);border:4px solid var(--green);border-radius:999px;padding:10px 18px;font-size:28px;box-shadow:8px 8px 0 var(--green)}.section-title span{display:block;margin-top:14px;color:var(--pink);font-weight:900}
+    .ticker-wrap{display:flex;flex-direction:column;gap:14px; overflow:hidden; width:100%; padding-top: 4px; padding-bottom: 4px;}.ticker{display:flex;gap:14px;width:max-content;animation:moveLeft 38s linear infinite}.ticker.reverse{animation:moveRight 44s linear infinite}.photo{width:190px;height:250px;object-fit:cover;border:5px solid var(--white);outline:3px solid var(--pink);border-radius:28px;box-shadow:var(--shadow);background:var(--white)}.ticker.reverse .photo{outline-color:var(--green)}@keyframes moveLeft{to{transform:translateX(-50%)}}@keyframes moveRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+    .magazine{display:grid;grid-template-columns:1fr;gap:18px;width:min(94vw,760px);margin:auto}.note{background:var(--white);border:4px solid var(--green);border-radius:32px;padding:24px;box-shadow:10px 10px 0 var(--pink);color:var(--green);font-weight:800;line-height:1.9}.note strong{display:block;color:var(--pink);font-size:32px;line-height:1;margin-bottom:12px}.polaroid{background:var(--white);border:4px solid var(--pink);border-radius:28px;padding:12px;transform:rotate(-2deg);box-shadow:var(--shadow)}.polaroid img{width:100%;height:420px;object-fit:cover;border-radius:20px}.polaroid p{margin:12px 0 2px;text-align:center;color:var(--pink);font-weight:1000;font-size:20px}
+    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;width:min(94vw,760px);margin:auto}.gallery img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:24px;border:4px solid var(--white);outline:3px solid var(--green);box-shadow:var(--shadow)}.gallery img:nth-child(3n+1){outline-color:var(--pink)}
+    .message-box{width:min(94vw,560px);margin:auto;background:var(--white);border:4px solid var(--pink);border-radius:36px;padding:18px;box-shadow:10px 10px 0 var(--green)}.message-box label{display:block;color:var(--pink);font-weight:1000;margin:12px 0 6px}.message-box input,.message-box textarea{width:100%;border:3px solid var(--green);border-radius:22px;padding:14px 16px;color:var(--pink);background:var(--white);outline:none}.message-box textarea{min-height:100px;resize:vertical}.message-box input:focus,.message-box textarea:focus{border-color:var(--pink);box-shadow:0 0 0 5px rgba(98,214,95,.25)}.submit{margin-top:14px;width:100%;border:0;border-radius:999px;padding:15px;background:var(--pink);color:var(--white);font-weight:1000;font-size:18px;box-shadow:0 8px 0 var(--green)}.empty{margin:20px auto 0;text-align:center;color:var(--pink);font-weight:900;background:var(--white);border:3px dashed var(--green);border-radius:28px;padding:22px;width:min(94vw,460px)}.wish-list{margin:18px auto 0;width:min(94vw,560px);display:grid;gap:12px}.wish{background:var(--white);border:3px solid var(--green);border-radius:24px;padding:13px 15px;box-shadow:6px 6px 0 var(--pink);color:var(--green);font-weight:900}.wish b{color:var(--pink);display:block;margin-bottom:4px}
+    .danmaku-layer{position:fixed;inset:0;z-index:15;pointer-events:none;overflow:hidden}.bullet{position:absolute;left:100vw;white-space:nowrap;background:rgba(255,255,255,.92);border:3px solid var(--pink);color:var(--pink);border-radius:999px;padding:8px 16px;font-weight:1000;box-shadow:0 8px 0 rgba(98,214,95,.45);animation:fly var(--dur) linear forwards;top:var(--top)}.bullet:nth-child(even){border-color:var(--green);color:var(--green);box-shadow:0 8px 0 rgba(255,63,159,.35)}@keyframes fly{to{transform:translateX(calc(-100vw - 120%))}}
+    footer{text-align:center;padding:48px 18px 80px;color:var(--pink);font-weight:1000}.heart-bg span{position:fixed;z-index:-1;color:var(--pink);font-weight:1000;opacity:.22;animation:float 8s ease-in-out infinite}.heart-bg span:nth-child(even){color:var(--green)}@keyframes float{50%{transform:translateY(-18px) rotate(12deg)}}
+    @media(min-width:720px){.magazine{grid-template-columns:1fr 1fr}.hero-img{height:650px}.photo{width:230px;height:300px}.gallery{grid-template-columns:repeat(3,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="heart-bg" aria-hidden="true"><span style="top:12%;left:6%">♡</span><span style="top:20%;right:8%">✿</span><span style="top:62%;left:8%">LOVE</span><span style="top:74%;right:10%">♡</span><span style="top:44%;left:44%">✦</span></div>
+
+  <div class="danmaku-layer" id="danmakuLayer"></div>
+  <header class="hero">
+    <div class="hero-card">
+      <img class="hero-img" src="head.jpeg" alt="Wedding photo">
+      <div class="sticker s1">TOKYO</div><div class="sticker s2">かわいい</div><div class="sticker s3">2027</div>
+      <div class="title"><h1>LILY<br>&<br>HSIU YUAN</h1><p>WE ARE GETTING MARRIED</p></div>
+    </div>
+  </header>
+  <section id="photos">
+    <h2 class="section-title"><b>PHOTO</b></h2>
+    <div class="ticker-wrap" id="tickerWrap"></div>
+  </section>
+
+  <section id="message">
+    <h2 class="section-title"><b>LEAVE A MESSAGE</b></h2>
+    <form class="message-box" id="messageForm">
+      <label for="name">NAME</label><input id="name" maxlength="18" placeholder="你的名字" required>
+      <label for="msg">MESSAGE</label><textarea id="msg" maxlength="70" placeholder="想對我們說的話" required></textarea>
+      <button class="submit" type="submit">送出祝福 ♡</button>
+    </form>
+    <div class="empty" id="emptyState">💌 第一位留下祝福的人，會出現在這裡 ♡</div>
+    <div class="wish-list" id="wishList"></div>
+  </section>
+  <footer>THANK YOU FOR BEING PART OF OUR STORY ♡</footer>
+  <script src="assets/images.js"></script>
+  <script>
+    const tickerWrap = document.getElementById('tickerWrap'); const rows = 3; const totalForTicker = 54; const perRow = totalForTicker / rows; const tickerImages = images.slice(0, totalForTicker); for (let row = 0; row < rows; row++) { const div = document.createElement('div'); div.className = 'ticker ' + (row % 2 ? 'reverse' : ''); const start = row * perRow; const end = start + perRow; const rowImages = tickerImages.slice(start, end); const list = [...rowImages, ...rowImages]; list.forEach(src => { const img = document.createElement('img'); img.className = 'photo'; img.src = src; img.loading = 'lazy'; img.decoding = 'async'; img.alt = 'Wedding photo'; div.appendChild(img); }); tickerWrap.appendChild(div); }
+    const gallery=document.getElementById('gallery');
+    if (gallery) {
+      images.forEach(src=>{ const img=document.createElement('img'); img.src = src; img.alt='Wedding photo'; gallery.appendChild(img); });
+    }
+
+    // 導覽列：預設全部是綠色，滑到對應區塊才變成白底桃色
+    const navLinks = Array.from(document.querySelectorAll('.topbar a'));
+    function setActiveNav(id){
+      navLinks.forEach(link=> link.classList.toggle('active', link.getAttribute('href') === '#' + id));
+    }
+    const sectionObserver = new IntersectionObserver((entries)=>{
+      const visible = entries
+        .filter(entry=>entry.isIntersecting)
+        .sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if (visible) setActiveNav(visible.target.id);
+    }, { threshold:[0.35,0.55,0.75], rootMargin:'-20% 0px -45% 0px' });
+    ['photos','message'].forEach(id=>{
+      const section = document.getElementById(id);
+      if (section) sectionObserver.observe(section);
+    });
+    // ===== 多人同步留言設定 =====
+    // 1) 先依照 setup_guide.txt 部署 Google Apps Script
+    // 2) 把下面這行改成你的 Web App URL
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzcesWMIA49a1hAjItW1ONkaNGUc1hQPE77Xg6keElWr3boyGdnI6lqXuGshAR1bYnN/exec';
+
+    let danmakuOn = true;
+    let timer = null;
+    let messageCache = [];
+
+    function isConfigured(){ return WEB_APP_URL && !WEB_APP_URL.includes('PASTE_YOUR'); }
+    function escapeHtml(str){ return String(str).replace(/[&<>'"]/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s])); }
+
+    function renderMessages(list = messageCache){
+      const wishList=document.getElementById('wishList');
+      const empty=document.getElementById('emptyState');
+      wishList.innerHTML='';
+      if(!isConfigured()){
+        empty.style.display='block';
+        empty.innerHTML='💌 尚未設定留言資料庫<br>請先完成 Google Apps Script 設定';
+        return;
+      }
+      empty.style.display=list.length?'none':'block';
+      empty.innerHTML='💌 第一位留下祝福的人，會出現在這裡 ♡';
+      list.slice().reverse().forEach(item=>{
+        const card=document.createElement('div');
+        card.className='wish';
+        card.innerHTML='<b>♡ '+escapeHtml(item.name)+'</b>'+escapeHtml(item.message || item.msg || '');
+        wishList.appendChild(card);
+      });
+      restartDanmaku();
+    }
+
+    function loadMessages(){
+      if(!isConfigured()) { renderMessages([]); return; }
+      const cb='weddingMessages_'+Date.now()+'_'+Math.floor(Math.random()*9999);
+      window[cb]=(res)=>{
+        try{
+          messageCache = (res && res.messages) ? res.messages : [];
+          renderMessages(messageCache);
+        } finally {
+          delete window[cb];
+          const old=document.getElementById(cb); if(old) old.remove();
+        }
+      };
+      const script=document.createElement('script');
+      script.id=cb;
+      script.src=WEB_APP_URL + (WEB_APP_URL.includes('?')?'&':'?') + 'callback=' + cb + '&t=' + Date.now();
+      script.onerror=()=>{ delete window[cb]; renderMessages(messageCache); };
+      document.body.appendChild(script);
+    }
+
+    document.getElementById('messageForm').addEventListener('submit',async e=>{
+      e.preventDefault();
+      const name=document.getElementById('name').value.trim();
+      const message=document.getElementById('msg').value.trim();
+      if(!name||!message) return;
+      if(!isConfigured()) { alert('尚未設定 Google Apps Script Web App URL'); return; }
+      const btn=e.target.querySelector('button[type="submit"]');
+      btn.disabled=true; btn.textContent='送出中...';
+      try{
+        await fetch(WEB_APP_URL, {
+          method:'POST',
+          mode:'no-cors',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body:JSON.stringify({name, message})
+        });
+        e.target.reset();
+        spawnBullet({name, message});
+        setTimeout(loadMessages, 900);
+      }catch(err){
+        alert('送出失敗，請稍後再試');
+      }finally{
+        btn.disabled=false; btn.textContent='送出祝福 ♡';
+      }
+    });
+
+    function spawnBullet(item){
+      if(!danmakuOn) return;
+      const text = item.message || item.msg || '';
+      if(!item.name || !text) return;
+      const layer=document.getElementById('danmakuLayer');
+      const b=document.createElement('div');
+      b.className='bullet';
+      b.style.setProperty('--top',(14+Math.random()*68)+'%');
+      b.style.setProperty('--dur',(10+Math.random()*8)+'s');
+      b.textContent='♡ '+item.name+'：'+text;
+      layer.appendChild(b);
+      setTimeout(()=>b.remove(),19000);
+    }
+
+    function restartDanmaku(){
+      clearInterval(timer);
+      document.getElementById('danmakuLayer').innerHTML='';
+      if(!messageCache.length||!danmakuOn) return;
+      let i=0;
+      timer=setInterval(()=>{
+        if(!messageCache.length||!danmakuOn) return;
+        spawnBullet(messageCache[i%messageCache.length]);
+        i++;
+      },2600);
+    }
+
+    document.getElementById('toggleDanmaku').addEventListener('click',()=>{
+      danmakuOn=!danmakuOn;
+      document.getElementById('toggleDanmaku').textContent=danmakuOn?'彈幕 ON':'彈幕 OFF';
+      restartDanmaku();
+    });
+
+    loadMessages();
+    setInterval(loadMessages, 12000);
+  </script>
+</body>
+</html>

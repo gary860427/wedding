@@ -150,7 +150,7 @@
         });
         e.target.reset();
         spawnBullet({name, message});
-        setTimeout(loadMessages, 900);
+        setTimeout(loadMessages, 300);
       }catch(err){
         alert('送出失敗，請稍後再試');
       }finally{
@@ -184,14 +184,8 @@
       },2600);
     }
 
-    document.getElementById('toggleDanmaku').addEventListener('click',()=>{
-      danmakuOn=!danmakuOn;
-      document.getElementById('toggleDanmaku').textContent=danmakuOn?'彈幕 ON':'彈幕 OFF';
-      restartDanmaku();
-    });
-
     loadMessages();
-    setInterval(loadMessages, 12000);
+    setInterval(loadMessages, 5000);
   </script>
 </body>
 </html>

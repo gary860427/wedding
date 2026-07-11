@@ -95,97 +95,237 @@
     function escapeHtml(str){ return String(str).replace(/[&<>'"]/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s])); }
 
     function renderMessages(list = messageCache){
-      const wishList=document.getElementById('wishList');
-      const empty=document.getElementById('emptyState');
-      wishList.innerHTML='';
+      const wishList = document.getElementById('wishList');
+      const empty = document.getElementById('emptyState');
+
+      wishList.innerHTML = '';
+
       if(!isConfigured()){
-        empty.style.display='block';
-        empty.innerHTML='💌 尚未設定留言資料庫<br>請先完成 Google Apps Script 設定';
+        empty.style.display = 'block';
+        empty.innerHTML = '💌 尚未設定留言資料庫<br>請先完成 Google Apps Script 設定';
         return;
       }
-      empty.style.display=list.length?'none':'block';
-      empty.innerHTML='💌 第一位留下祝福的人，會出現在這裡 ♡';
-      list.slice().reverse().forEach(item=>{
-        const card=document.createElement('div');
-        card.className='wish';
-        card.innerHTML='<b>♡ '+escapeHtml(item.name)+'</b>'+escapeHtml(item.message || item.msg || '');
+
+      empty.style.display = list.length ? 'none' : 'block';
+      empty.innerHTML = '💌 第一位留下祝福的人，會出現在這裡 ♡';
+
+      list.slice().reverse().forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'wish';
+        card.innerHTML =
+          '<b>♡ ' + escapeHtml(item.name) + '</b>' +
+          escapeHtml(item.message || item.msg || '');
+
         wishList.appendChild(card);
       });
-      restartDanmaku();
+
+  // 第一次取得留言時才啟動彈幕計時器
+      if(!timer && messageCache.length){
+        startDanmaku();
+      }
     }
 
     function loadMessages(){
-      if(!isConfigured()) { renderMessages([]); return; }
-      const cb='weddingMessages_'+Date.now()+'_'+Math.floor(Math.random()*9999);
-      window[cb]=(res)=>{
+      if(!isConfigured()){
+        renderMessages([]);
+        return;
+      }
+
+      const cb =
+        'weddingMessages_' +
+        Date.now() +
+        '_' +
+        Math.floor(Math.random() * 9999);
+    
+      window[cb] = res => {
         try{
-          messageCache = (res && res.messages) ? res.messages : [];
+          messageCache =
+            res && Array.isArray(res.messages)
+              ? res.messages
+              : [];
+    
           renderMessages(messageCache);
         } finally {
           delete window[cb];
-          const old=document.getElementById(cb); if(old) old.remove();
+    
+          const oldScript = document.getElementById(cb);
+          if(oldScript){
+            oldScript.remove();
+          }
         }
       };
-      const script=document.createElement('script');
-      script.id=cb;
-      script.src=WEB_APP_URL + (WEB_APP_URL.includes('?')?'&':'?') + 'callback=' + cb + '&t=' + Date.now();
-      script.onerror=()=>{ delete window[cb]; renderMessages(messageCache); };
+    
+      const script = document.createElement('script');
+    
+      script.id = cb;
+      script.src =
+        WEB_APP_URL +
+        (WEB_APP_URL.includes('?') ? '&' : '?') +
+        'callback=' +
+        cb +
+        '&t=' +
+        Date.now();
+    
+      script.onerror = () => {
+        delete window[cb];
+    
+        const oldScript = document.getElementById(cb);
+        if(oldScript){
+          oldScript.remove();
+        }
+    
+        renderMessages(messageCache);
+      };
+    
       document.body.appendChild(script);
     }
-
-    document.getElementById('messageForm').addEventListener('submit',async e=>{
-      e.preventDefault();
-      const name=document.getElementById('name').value.trim();
-      const message=document.getElementById('msg').value.trim();
-      if(!name||!message) return;
-      if(!isConfigured()) { alert('尚未設定 Google Apps Script Web App URL'); return; }
-      const btn=e.target.querySelector('button[type="submit"]');
-      btn.disabled=true; btn.textContent='送出中...';
-      try{
-        await fetch(WEB_APP_URL, {
-          method:'POST',
-          mode:'no-cors',
-          headers:{'Content-Type':'text/plain;charset=utf-8'},
-          body:JSON.stringify({name, message})
-        });
-        e.target.reset();
-        spawnBullet({name, message});
-        setTimeout(loadMessages, 300);
-      }catch(err){
-        alert('送出失敗，請稍後再試');
-      }finally{
-        btn.disabled=false; btn.textContent='送出祝福 ♡';
-      }
-    });
-
+    
+    document
+      .getElementById('messageForm')
+      .addEventListener('submit', async e => {
+        e.preventDefault();
+    
+        const name = document
+          .getElementById('name')
+          .value
+          .trim();
+    
+        const message = document
+          .getElementById('msg')
+          .value
+          .trim();
+    
+        if(!name || !message){
+          return;
+        }
+    
+        if(!isConfigured()){
+          alert('尚未設定 Google Apps Script Web App URL');
+          return;
+        }
+    
+        const btn = e.target.querySelector(
+          'button[type="submit"]'
+        );
+    
+        btn.disabled = true;
+        btn.textContent = '送出中...';
+    
+        try{
+          await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify({
+              name,
+              message
+            })
+          });
+    
+          e.target.reset();
+    
+          // 自己送出的留言立即顯示成彈幕
+          spawnBullet({
+            name,
+            message
+          });
+    
+          // 稍等 Apps Script 寫入資料，再重新抓取
+          setTimeout(loadMessages, 900);
+    
+        } catch(err){
+          console.error(err);
+          alert('送出失敗，請稍後再試');
+    
+        } finally {
+          btn.disabled = false;
+          btn.textContent = '送出祝福 ♡';
+        }
+      });
+    
     function spawnBullet(item){
-      if(!danmakuOn) return;
-      const text = item.message || item.msg || '';
-      if(!item.name || !text) return;
-      const layer=document.getElementById('danmakuLayer');
-      const b=document.createElement('div');
-      b.className='bullet';
-      b.style.setProperty('--top',(14+Math.random()*68)+'%');
-      b.style.setProperty('--dur',(10+Math.random()*8)+'s');
-      b.textContent='♡ '+item.name+'：'+text;
-      layer.appendChild(b);
-      setTimeout(()=>b.remove(),19000);
+      if(!danmakuOn){
+        return;
+      }
+    
+      const text =
+        item.message ||
+        item.msg ||
+        '';
+    
+      if(!item.name || !text){
+        return;
+      }
+    
+      const layer =
+        document.getElementById('danmakuLayer');
+    
+      const bullet =
+        document.createElement('div');
+    
+      bullet.className = 'bullet';
+    
+      bullet.style.setProperty(
+        '--top',
+        (14 + Math.random() * 68) + '%'
+      );
+    
+      const duration =
+        10 + Math.random() * 8;
+    
+      bullet.style.setProperty(
+        '--dur',
+        duration + 's'
+      );
+    
+      bullet.textContent =
+        '♡ ' +
+        item.name +
+        '：' +
+        text;
+    
+      layer.appendChild(bullet);
+    
+      // 配合實際動畫秒數，動畫結束後再刪除
+      setTimeout(() => {
+        bullet.remove();
+      }, (duration + 1) * 1000);
     }
-
-    function restartDanmaku(){
-      clearInterval(timer);
-      document.getElementById('danmakuLayer').innerHTML='';
-      if(!messageCache.length||!danmakuOn) return;
-      let i=0;
-      timer=setInterval(()=>{
-        if(!messageCache.length||!danmakuOn) return;
-        spawnBullet(messageCache[i%messageCache.length]);
-        i++;
-      },2600);
+    
+    function startDanmaku(){
+      if(timer || !danmakuOn || !messageCache.length){
+        return;
+      }
+    
+      let index = 0;
+    
+      // 開始後先顯示一則，不必等待 2.6 秒
+      spawnBullet(
+        messageCache[index % messageCache.length]
+      );
+    
+      index++;
+    
+      timer = setInterval(() => {
+        if(!danmakuOn || !messageCache.length){
+          return;
+        }
+    
+        spawnBullet(
+          messageCache[index % messageCache.length]
+        );
+    
+        index++;
+      }, 2600);
     }
-
+    
+    // 網站開啟時立即抓取一次
     loadMessages();
+    
+    // 每 5 秒重新抓取留言
     setInterval(loadMessages, 5000);
-  </script>
-</body>
-</html>
+      </script>
+    </body>
+    </html>
